@@ -1,13 +1,26 @@
+# port: 0 is random port
 server:
-  port: 9001
+  port: 0
 
 spring:
   application:
     name: user-service
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: h2-console
 eureka:
+  instance:
+    #random instance name
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
     # eureka-server url
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+greeting:
+  message: welcome to ${spring.application.name}
